@@ -446,7 +446,7 @@ async def handle_text(message: types.Message):
         await send_text(
             message,
             "Аты-жөніңізді жазыңыз:\n"
-            "Укажите ваши ФИО:",
+            "Укажите ваше ФИО:",
             reply_markup=ReplyKeyboardRemove(),
         )
         return
