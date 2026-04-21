@@ -1,5 +1,7 @@
 import asyncio
 import re
+import os
+import json
 from datetime import datetime
 from pathlib import Path
 
@@ -29,7 +31,19 @@ CREDS_FILE = BASE_DIR / "creds.json"
 # =========================================================
 # GOOGLE SHEETS
 # =========================================================
-creds = Credentials.from_service_account_file(str(CREDS_FILE), scopes=SCOPES)
+
+creds_json = os.getenv("CREDS_JSON")
+
+if creds_json:
+    creds = Credentials.from_service_account_info(
+        json.loads(creds_json),
+        scopes=SCOPES
+    )
+else:
+    creds = Credentials.from_service_account_file(
+        str(CREDS_FILE),
+        scopes=SCOPES
+    )
 client = gspread.authorize(creds)
 sheet = client.open_by_url(SPREADSHEET_URL).sheet1
 
